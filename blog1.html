@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: #19004D;
+            color: aliceblue;
+            align-items: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-family: 'Times New Roman', Times, serif;
+            color: azure;
+            text-align: center;
+            font-size: 3rem;
+            padding: 30px;
+        }
+
+        p {
+            font-size: 2rem;
+            text-align: justify;
+        }
+
+        .blog1_img {
+            margin-left: 32%;
+            margin-bottom: 50px;
+            border-radius: 5%;
+            border: 4px solid purple;
+        }
+
+        .comments {
+            margin-top: 30px;
+        }
+
+        #like_button {
+            background-color: palevioletred;
+            color: white;
+            font-size: x-large;
+            border-radius: 8%;
+            padding: 0.5%;
+        }
+
+        #commentInput {
+            border: 3px solid palevioletred;
+            border-radius: 15px;
+        }
+
+        #commentButton {
+            background-color: palevioletred;
+            color: white;
+            font-size: large;
+            border-radius: 10px;
+            padding: 0.5%;
+
+        }
+
+        #commentList {
+            list-style:square;
+            font-size: large;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <h1 class="blog1_heading"> The Cosmic Eye </h1>
+
+    <img class="blog1_img" src="cosmiceye.jpg">
+
+    <p class="blog1_para">
+        "The Cosmic Eye" is a mesmerizing journey into the depths of the universe, offering a profound exploration of the cosmos and our place within it. With each glance through its celestial lens, we are transported beyond the boundaries of our world, encountering the wonders of distant galaxies, sparkling stars, and mysterious celestial phenomena. This cosmic odyssey ignites our imagination, evoking a sense of awe and wonder as we contemplate the vastness of space and the mysteries it holds. Through "The Cosmic Eye," we are reminded of our interconnectedness with the universe, prompting reflection on the infinite possibilities and boundless potential that lie beyond the confines of our earthly existence. It serves as a reminder of the beauty and majesty of the cosmos, inspiring us to gaze upward and embrace the infinite wonders that await us in the great beyond!
+    </p>
+
+    <div class="likes">
+        <button id="like_button">Like</button>
+        <span id="like_count">0</span> Likes
+    </div>
+
+    <div class="comments">
+        <h2>Comments</h2>
+        <textarea id="commentInput" rows="4" cols="50"></textarea><br>
+        <button id="commentButton">Add Comment</button>
+        <ul id="commentList"></ul>
+    </div>
+
+    <script>
+
+        const like_button = document.getElementById('like_button');
+        const like_count = document.getElementById('like_count');
+        
+        let currentLikes = localStorage.getItem('likes') || 0;
+        like_count.textContent = currentLikes;
+
+        const commentInput = document.getElementById('commentInput');
+        const commentButton = document.getElementById('commentButton');
+        const commentList = document.getElementById('commentList');
+
+        let comments = JSON.parse(localStorage.getItem('comments')) || [];
+
+        comments.forEach(comment => {
+            const li = document.createElement('li');
+            li.textContent = comment;
+            commentList.appendChild(li);
+        });
+
+        like_button.addEventListener('click', () => {
+            currentLikes++;
+            like_count.textContent = currentLikes;
+            localStorage.setItem('likes', currentLikes);
+        });
+
+
+        commentButton.addEventListener('click', () => {
+            const newComment = commentInput.value;
+            if (newComment.trim() !== '') {
+                comments.push(newComment);
+                localStorage.setItem('comments', JSON.stringify(comments));
+                const li = document.createElement('li');
+                li.textContent = newComment;
+                commentList.appendChild(li);
+                commentInput.value = ''; 
+            }
+        });
+    </script>
+</body>
+
+</html>

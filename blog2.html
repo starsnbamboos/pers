@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <style>
+
+            body {
+                background-color: rgb(46, 185, 209);
+                color: aliceblue;
+                align-items: center;
+                padding: 50px;
+            }
+
+            h1 {
+                font-family: 'Times New Roman', Times, serif;
+                color: azure;
+                text-align: center;
+                font-size: 3rem;
+                padding: 30px;
+            }
+
+            p {
+                font-size: 2rem;
+                text-align: justify;
+            }
+
+            .blog2_img {
+                margin-left: 30%;
+                margin-bottom: 50px;
+                min-width: 40%;
+                border-radius: 5%;
+                border: 4px solid wheat;
+
+            }
+
+        .comments {
+            margin-top: 30px;
+        }
+
+        #like_button {
+            background-color:#D4AF37;
+            color: white;
+            font-size: x-large;
+            border-radius: 8%;
+            padding: 0.5%;
+        }
+
+        #commentInput {
+            border: 3px solid #D4AF37;
+            border-radius: 15px;
+        }
+
+        #commentButton {
+            background-color: #D4AF37;
+            color: white;
+            font-size: large;
+            border-radius: 10px;
+            padding: 0.5%;
+
+        }
+
+        #commentList {
+            list-style:square;
+            font-size: large;
+        }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <h1 class="blog2_heading"> Antarctic Chronicles </h1>
+
+            <img class="blog2_img"  src="antarctica.jpeg">
+
+            <p class="blog2_para">
+                Antarctica, the enigmatic southern continent, not only boasts breathtaking 
+                beauty but also harbors scientific marvels that continue to intrigue and 
+                inspire. Beneath its icy veneer lies a treasure trove of geological wonders, 
+                including the mysterious subglacial lakes, hidden beneath kilometers of ice, 
+                offering insights into the planet's past climate and potential for life in
+                extreme environments. Antarctica serves as a living laboratory for climate 
+                research, where ice cores provide invaluable records of Earth's atmospheric
+                history, unraveling the mysteries of global climate change. Its barren 
+                desolation paradoxically supports diverse ecosystems, with resilient 
+                organisms like extremophiles thriving in the harshest conditions on the 
+                planet. Furthermore, Antarctica's unique position as a pristine environment
+                allows for unparalleled astronomical observations, unlocking the secrets of
+                the universe from its remote, light-pollution-free skies. In its stark 
+                beauty and scientific intrigue, Antarctica stands as a testament to the
+                boundless wonders of the natural world and the inexhaustible curiosity
+                of humanity!
+            </p>
+
+            <div class="likes">
+                <button id="like_button">Like</button>
+                <span id="like_count">0</span> Likes
+            </div>
+        
+            <div class="comments">
+                <h2>Comments</h2>
+                <textarea id="commentInput" rows="4" cols="50"></textarea><br>
+                <button id="commentButton">Add Comment</button>
+                <ul id="commentList"></ul>
+            </div>
+
+            <script>
+
+                const like_button = document.getElementById('like_button');
+                const like_count = document.getElementById('like_count');
+                
+                let currentLikes = localStorage.getItem('likes') || 0;
+                like_count.textContent = currentLikes;
+        
+                const commentInput = document.getElementById('commentInput');
+                const commentButton = document.getElementById('commentButton');
+                const commentList = document.getElementById('commentList');
+        
+                let comments = JSON.parse(localStorage.getItem('comments')) || [];
+        
+                comments.forEach(comment => {
+                    const li = document.createElement('li');
+                    li.textContent = comment;
+                    commentList.appendChild(li);
+                });
+        
+                like_button.addEventListener('click', () => {
+                    currentLikes++;
+                    like_count.textContent = currentLikes;
+                    localStorage.setItem('likes', currentLikes);
+                });
+        
+        
+                commentButton.addEventListener('click', () => {
+                    const newComment = commentInput.value;
+                    if (newComment.trim() !== '') {
+                        comments.push(newComment);
+                        localStorage.setItem('comments', JSON.stringify(comments));
+                        const li = document.createElement('li');
+                        li.textContent = newComment;
+                        commentList.appendChild(li);
+                        commentInput.value = ''; 
+                    }
+                });
+            </script>
+    </body>
+
+</html>
